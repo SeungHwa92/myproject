@@ -1,6 +1,6 @@
 import torch
 from torch import nn
-
+import encoding
 
 class network(nn.Module):
     def __init__(self):
