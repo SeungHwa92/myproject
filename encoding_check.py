@@ -3,13 +3,11 @@ from torch import nn
 import encoding
 
 
-import encoding.nn.SyncBatchNorm as BN
-
 class network(nn.Module):
     def __init__(self):
         super(network, self).__init__()
-        self.fc = nn.Linear(10, 10)
-        self.bn = encoding.nn.BatchNorm1d(10)
+        self.fc = nn.Linear(1000, 1000)
+        self.bn = encoding.nn.SyncBatchNorm(1000)
         #self.bn = BN(10)
     def forward(self, x):
         x = self.fc(x)
@@ -24,8 +22,10 @@ net = nn.DataParallel(net)
 
 
 import numpy as np
-a = np.random.random(100).reshape((10, 10))
+a = np.random.random(1000000).reshape((1000, 1000))
 a = torch.Tensor(a)
-out = net(a)
+
+for i in range(100000):
+    out = net(a)
 
 print(out)
